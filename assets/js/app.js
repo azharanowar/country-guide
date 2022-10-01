@@ -2,7 +2,7 @@ document.getElementById("mainMenuUL").addEventListener('click', (event) => {
    const activeMenu = document.querySelector("#mainMenuUL .active");
    const targetedMenu = event.target;
    if (targetedMenu.classList.contains('nav-link') && activeMenu !== targetedMenu) {
-    websitePreloader(true);
+       websitePreloader(true);
        activeMenu.classList.remove('active');
        targetedMenu.classList.add('active');
        switchMainSectionByMenuId(event.target.id);
@@ -15,9 +15,13 @@ const switchMainSectionByMenuId = (id) => {
     switch (id){
         case "countryGuideMenu":
             document.getElementById("countryGuideSection").classList.add('active-section');
+            document.getElementById("mainHeading").innerText = "Country Detailed Information";
+            
             return;
         case "allCountriesMenu":
             document.getElementById("allCountriesSection").classList.add('active-section');
+            document.getElementById("mainHeading").innerText = "All Countries Information";
+            getAllCountriesInformation();
             return;
     }
 
@@ -59,7 +63,6 @@ const getCountryDetailedInformationByCountryName = async(countryName) => {
 }
 
 const displayCountryDetailedInformation = countryData => {
-    console.log(countryData)
     const countryFlagSVG = countryData[0].flags.svg;
     const countryName = countryData[0].name.common;
     const countryOfficialName = countryData[0].name.official;
@@ -110,3 +113,49 @@ document.getElementById("detailedInformationSearchBtn").addEventListener('click'
 
     detailedInformationSearchInput.value = '';
 });
+
+
+
+// Load all countries data from RESTCountryAPI...
+const getAllCountriesInformation = async() => {
+    const response = await fetch('https://restcountries.com/v3.1/all');
+    if(response.ok) {
+        noDataFoundMessage(false);
+        const data = await response.json();
+        displayAllCountryInformation(data);
+    } else{
+        websitePreloader(false);
+        noDataFoundMessage(true);
+    }
+}
+
+
+const displayAllCountryInformation = countriesData => {
+    const allCountriesCards = document.getElementById('allCountriesCards');
+    console.log(countriesData)
+    countriesData.forEach(countryData => {
+        const countryFlagSVG = countryData.flags.svg;
+        const countryCode = countryData.cca2;
+        const countryName = countryData.name.common;
+        const countryOfficialName = countryData.name.official;
+        const countryCapital = countryData.capital ? Object.values(countryData.capital) : "Has No Capital";
+
+
+
+        const newCountryCardDiv = document.createElement('div');
+        newCountryCardDiv.classList.add('col');
+        newCountryCardDiv.innerHTML = `<div class="card h-100 shadow-sm">
+            <img src="${countryFlagSVG}" class="card-img-top w-75 h-100 d-block pt-4 mx-auto country-flag-svg" alt="${countryName} Flag SVG">
+            <div class="card-body text-center">
+                <h5 class="country-name">${countryName}</h5>
+                <p class="text-muted">Official Name: ${countryOfficialName}</p>
+                <p class="text-muted">Capital: ${countryCapital}</p>
+                <button type="button" class="btn btn-secondary w-100 view-details-btn" onclick="getCountryDataByCountryCode('${countryCode}')">View Details</button>
+            </div>
+        </div>`;
+        allCountriesCards.appendChild(newCountryCardDiv);
+
+
+        websitePreloader(false);
+    });
+}
