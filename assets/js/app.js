@@ -2,7 +2,6 @@ document.getElementById("mainMenuUL").addEventListener('click', (event) => {
    const activeMenu = document.querySelector("#mainMenuUL .active");
    const targetedMenu = event.target;
    if (targetedMenu.classList.contains('nav-link') && activeMenu !== targetedMenu) {
-       websitePreloader(true);
        activeMenu.classList.remove('active');
        targetedMenu.classList.add('active');
        switchMainSectionByMenuId(event.target.id);
@@ -16,9 +15,9 @@ const switchMainSectionByMenuId = (id) => {
         case "countryGuideMenu":
             document.getElementById("countryGuideSection").classList.add('active-section');
             document.getElementById("mainHeading").innerText = "Country Detailed Information";
-            
             return;
         case "allCountriesMenu":
+            websitePreloader(true);
             document.getElementById("allCountriesSection").classList.add('active-section');
             document.getElementById("mainHeading").innerText = "All Countries Information";
             getAllCountriesInformation();
@@ -51,6 +50,20 @@ const noDataFoundMessage = notFoundStatus => {
 // Load country data from RESTCountryAPI by country name...
 const getCountryDetailedInformationByCountryName = async(countryName) => {
     const response = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
+    if(response.ok) {
+        noDataFoundMessage(false);
+        const data = await response.json();
+        displayCountryDetailedInformation(data);
+    } else{
+        websitePreloader(false);
+        noDataFoundMessage(true);
+    }
+    
+}
+
+// Load country data from RESTCountryAPI by country code...
+const getCountryDetailedInformationByCountryCode = async(countryCode) => {
+    const response = await fetch(`https://restcountries.com/v3.1/alpha/${countryCode}`);
     if(response.ok) {
         noDataFoundMessage(false);
         const data = await response.json();
@@ -132,7 +145,6 @@ const getAllCountriesInformation = async() => {
 
 const displayAllCountryInformation = countriesData => {
     const allCountriesCards = document.getElementById('allCountriesCards');
-    console.log(countriesData)
     countriesData.forEach(countryData => {
         const countryFlagSVG = countryData.flags.svg;
         const countryCode = countryData.cca2;
@@ -158,4 +170,11 @@ const displayAllCountryInformation = countriesData => {
 
         websitePreloader(false);
     });
+}
+
+
+const getCountryDataByCountryCode = countryCode => {
+    websitePreloader(true);
+    document.getElementById("countryGuideMenu").click();
+    getCountryDetailedInformationByCountryCode(countryCode);
 }
