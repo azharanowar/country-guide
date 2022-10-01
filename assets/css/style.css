@@ -19,3 +19,11 @@ body {
 .country-flag-img {
     width: 80%;
 }
+
+.content-section {
+    display: none;
+}
+
+.active-section {
+    display: block;
+}

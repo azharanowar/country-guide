@@ -26,24 +26,18 @@
                                     </a>
                                 </div>
                                 <button class="col-2 navbar-toggler" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02"
+                                    data-bs-target="#navbarToggler" aria-controls="navbarToggler"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
                                 </button>
-                                <div class="col-md-9 collapse navbar-collapse" id="navbarTogglerDemo02">
+                                <div class="col-md-9 collapse navbar-collapse" id="navbarToggler">
                                     <ul
-                                        class="col-md-7 justify-content-end pe-md-4 text-end py-md-0 navbar-nav mb-lg-0 mx-auto me-0 py-3 py-md-0">
+                                        class="col-md-7 justify-content-end pe-md-4 text-end py-md-0 navbar-nav mb-lg-0 mx-auto me-0 py-3 py-md-0" id="mainMenuUL">
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                                            <a class="nav-link active" aria-current="page" href="#phoneGuideSection" id="countryGuideMenu">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">All Country</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">About</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">Contact</a>
+                                            <a class="nav-link" href="#allCountriesSection" id="allCountriesMenu">All Country</a>
                                         </li>
                                     </ul>
                                     <form class="col-md-5 my-2 my-md-0 mx-auto me-0" role="search">
@@ -68,38 +62,43 @@
         <section class="pb-5">
             <div class="container pt-3">
                 <h4 class="text-center pt-4 pb-3">Country Detailed Information</h4>
-                <div class="row" id="phoneGuideSection">
-                    <div class="col-md-12">
-                        <div class="row mb-4">
-                            <form class="col-md-5 mx-auto" role="search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control rounded-5 me-1 px-3 py-2"
-                                        name="search_bar" placeholder="Search by country name..." id="detailedInfomationSearchInput">
-                                    <input type="button" class="btn btn-secondary rounded-5 px-3 py-2"
-                                        value="Search" id="detailedInfomationSearchBtn">
+                <section class="content-section active-section" id="countryGuideSection">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row mb-4">
+                                <form class="col-md-5 mx-auto" role="search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control rounded-5 me-1 px-3 py-2"
+                                            name="search_bar" placeholder="Search by country name..." id="detailedInfomationSearchInput">
+                                        <input type="button" class="btn btn-secondary rounded-5 px-3 py-2"
+                                            value="Search" id="detailedInfomationSearchBtn">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 mx-auto bg-white rounded-3 p-5 text-center">
+                                    <!-- Here dynamically will load country information from JavaScript with RESTCountryAPI -->
+                                    <img src="" alt="" class="img-fluid country-flag-img shadow-lg" id="countryFlagSVG">
+                                    <h3 class="country-name mt-5 mb-4">Name: <span id="displayCountryName"></span></h3>
+                                    <p class="mb-1">Official Name: <span id="displayCountryOfficialName"></span></p>
+                                    <p class="mb-1">Total Area: <span id="displayCountryTotalArea"></span></p>
+                                    <p class="mb-1">Total Population: <span id="displayCountryPopulation"></span></p>
+                                    <p class="mb-1">Region: <span id="displayCountryRegion"></span></p>
+                                    <p class="mb-1">Currencies: <span id="displayCountryCurrencies"></span></p>
+                                    <p class="mb-1">TimeZone: <span id="displayCountryTimeZone"></span></p>
+                                    <p class="mb-1">Independent Status: <span id="displayCountryIndependentStatus"></span></p>
+                                    <p class="mb-1">Landlocked?: <span id="displayCountryLandlocked"></span></p>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8 mx-auto bg-white rounded-3 p-5 text-center">
-                                <!-- Here dynamically will load country information from JavaScript with RESTCountryAPI -->
-                                <img src="" alt="" class="img-fluid country-flag-img shadow-lg" id="countryFlagSVG">
-                                <h3 class="country-name mt-5 mb-4">Name: <span id="displayCountryName"></span></h3>
-                                <p class="mb-1">Official Name: <span id="displayCountryOfficialName"></span></p>
-                                <p class="mb-1">Total Area: <span id="displayCountryTotalArea"></span></p>
-                                <p class="mb-1">Total Population: <span id="displayCountryPopulation"></span></p>
-                                <p class="mb-1">Region: <span id="displayCountryRegion"></span></p>
-                                <p class="mb-1">Currencies: <span id="displayCountryCurrencies"></span></p>
-                                <p class="mb-1">TimeZone: <span id="displayCountryTimeZone"></span></p>
-                                <p class="mb-1">Independent Status: <span id="displayCountryIndependentStatus"></span></p>
-                                <p class="mb-1">Landlocked?: <span id="displayCountryLandlocked"></span></p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row row-cols-1 row-cols-md-3 g-4" id="phoneGuideSection">
-                    <!-- Here dynamically will load countries cards from JavaScript with RESTCountryAPI -->
-                </div>
+                </section>
+                <section class="content-section" id="allCountriesSection">
+                    <div class="row row-cols-1 row-cols-md-3 g-4" id="allCountriesCards">
+                        <!-- Here dynamically will load countries cards from JavaScript with RESTCountryAPI -->
+                        <p>Hello</p>
+                    </div>
+                </section>
             </div>
         </section>
         <section class="container text-center">
