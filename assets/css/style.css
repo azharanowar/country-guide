@@ -15,3 +15,7 @@ body {
 #noDataFoundMessage {
     display: none;
 }
+
+.country-flag-img {
+    width: 80%;
+}
